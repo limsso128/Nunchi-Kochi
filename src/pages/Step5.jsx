@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import step5Background from '../assets/images/step5_background.png';
 import step5_1Background from '../assets/images/step5_1_background.png';
 import step5_2Background from '../assets/images/step5_2_background.png';
@@ -23,12 +23,14 @@ const bgMap = {
 
 function Step5() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const scoreState = { 명성: location.state?.명성 ?? 0, 호감도: location.state?.호감도 ?? 0 };
   const [index, setIndex] = useState(0);
 
   const handleNext = () => {
     const next = index + 1;
     if (next >= steps.length) {
-      navigate('/step6');
+      navigate('/step6', { state: scoreState });
       return;
     }
     setIndex(next);

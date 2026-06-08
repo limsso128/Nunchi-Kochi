@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import step3Background from '../assets/images/step3_background.png';
 import Layout from '../components/Layout';
 import NarrationBox from '../components/NarrationBox';
@@ -47,6 +47,7 @@ function ScoreOverlay({ score }) {
 
 function Step3_1() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [index, setIndex] = useState(0);
   const isLast = index === steps.length - 1;
 
@@ -54,7 +55,7 @@ function Step3_1() {
     if (index < steps.length - 1) {
       setIndex(index + 1);
     } else {
-      navigate('/step4');
+      navigate('/step4', { state: { 명성: (location.state?.명성 ?? 0) + 30, 호감도: (location.state?.호감도 ?? 0) + 40 } });
     }
   };
 

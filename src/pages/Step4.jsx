@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import step4Background from '../assets/images/step4_background.png';
 import Layout from '../components/Layout';
 import DialogueBox from '../components/DialogueBox';
@@ -19,6 +19,8 @@ const choices = [
 
 function Step4() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const scoreState = { 명성: location.state?.명성 ?? 0, 호감도: location.state?.호감도 ?? 0 };
   const [index, setIndex] = useState(0);
   const [showChoices, setShowChoices] = useState(false);
 
@@ -55,13 +57,13 @@ function Step4() {
         {showChoices && (
           <>
             <div style={{ position: 'absolute', top: '480px', left: '50%', transform: 'translateX(-50%)' }}>
-              <MissionCard text={choices[0].text} index={choices[0].index} routeOverride={choices[0].route} />
+              <MissionCard text={choices[0].text} index={choices[0].index} routeOverride={choices[0].route} scoreState={scoreState} />
             </div>
             <div style={{ position: 'absolute', top: '590px', left: '50%', transform: 'translateX(-50%)' }}>
-              <MissionCard text={choices[1].text} index={choices[1].index} routeOverride={choices[1].route} />
+              <MissionCard text={choices[1].text} index={choices[1].index} routeOverride={choices[1].route} scoreState={scoreState} />
             </div>
             <div style={{ position: 'absolute', top: '700px', left: '50%', transform: 'translateX(-50%)' }}>
-              <MissionCard text={choices[2].text} index={choices[2].index} routeOverride={choices[2].route} />
+              <MissionCard text={choices[2].text} index={choices[2].index} routeOverride={choices[2].route} scoreState={scoreState} />
             </div>
           </>
         )}

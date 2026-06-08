@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import step4Background from '../assets/images/step4_background.png';
 import Layout from '../components/Layout';
 import NarrationBox from '../components/NarrationBox';
@@ -42,6 +42,7 @@ function ScoreOverlay({ score }) {
 
 function Step4_2() {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <Layout>
       <div style={{
@@ -52,7 +53,7 @@ function Step4_2() {
       }}>
         <NarrationBox
           text={'몇초간의 정적인 시간이 있고 사수님이 내꺼 포함 대리님, 팀장님, 다른 동료분들의\n수저와 물을 준비해 주셨다.'}
-          onNext={() => navigate('/step5')}
+          onNext={() => navigate('/step5', { state: { 명성: (location.state?.명성 ?? 0) - 40, 호감도: (location.state?.호감도 ?? 0) - 30 } })}
         />
         <ScoreOverlay score={-40} />
         <div style={{

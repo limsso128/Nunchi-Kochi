@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import step6Background from '../assets/images/step6_background.png';
 import Layout from '../components/Layout';
 import NarrationBox from '../components/NarrationBox';
@@ -10,13 +10,15 @@ const steps = [
 
 function Step6() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const scoreState = { 명성: location.state?.명성 ?? 0, 호감도: location.state?.호감도 ?? 0 };
   const [index, setIndex] = useState(0);
 
   const handleNext = () => {
     if (index < steps.length - 1) {
       setIndex(index + 1);
     } else {
-      navigate('/step7');
+      navigate('/step7', { state: scoreState });
     }
   };
 

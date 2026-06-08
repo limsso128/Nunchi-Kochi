@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import step1_1Background from '../assets/images/Step1_1.png';
 import Layout from '../components/Layout';
 import NarrationBox from '../components/NarrationBox';
@@ -11,13 +11,14 @@ const dialogues = [
 
 function Step1_A1() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [index, setIndex] = useState(0);
 
   const handleNext = () => {
     if (index < dialogues.length - 1) {
       setIndex(index + 1);
     } else {
-      navigate('/step2');
+      navigate('/step2', { state: { 명성: -15, 호감도: 0 } });
     }
   };
 

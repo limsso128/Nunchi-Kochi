@@ -94,7 +94,7 @@ function Step1_1() {
             </div>
           </>
         ) : (
-          <DialogueBox text="다녀오겠습니다~" onNext={() => navigate('/step2')} />
+          <DialogueBox text="다녀오겠습니다~" onNext={() => navigate('/step2', { state: { 명성: 15, 호감도: 0 } })} />
         )}
       </div>
     </Layout>
