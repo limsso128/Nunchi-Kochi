@@ -2,6 +2,7 @@ import { useState } from 'react';
 import step1Background from '../assets/images/Step1.png';
 import Layout from '../components/Layout';
 import MissionCard from '../components/MissionCard';
+import NextButton from '../components/NextButton';
 
 const dialogues = [
   '띠디디띠-(알람음)',
@@ -109,28 +110,7 @@ function Step1() {
                 {dialogues[index]}
               </p>
             </div>
-            <p
-              style={{
-                position: 'absolute',
-                top: '744px',
-                left: '1159px',
-                width: '57px',
-                height: '35px',
-                color: '#FFF',
-                textAlign: 'center',
-                fontFamily: 'Coda',
-                fontSize: '30px',
-                fontStyle: 'normal',
-                fontWeight: 400,
-                lineHeight: 'normal',
-                margin: 0,
-                cursor: 'pointer',
-                zIndex: 10,
-              }}
-              onClick={handleNext}
-            >
-              &gt;
-            </p>
+            <NextButton onClick={handleNext} top="744px" left="1159px" />
             <div
               style={{
                 position: 'absolute',

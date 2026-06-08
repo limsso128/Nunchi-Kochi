@@ -7,9 +7,15 @@ function MissionCard({ text, index }) {
   const [selected, setSelected] = useState(false);
   const navigate = useNavigate();
 
+  const routes = {
+    1: '/step1-a',
+    2: '/step1-b',
+    3: '/step1-1',
+  };
+
   const handleClick = () => {
     setSelected(true);
-    navigate('/step1-1', { state: { choice: index } });
+    navigate(routes[index] || '/step1-1', { state: { choice: index } });
   };
 
   return (
