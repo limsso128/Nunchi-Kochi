@@ -9,6 +9,7 @@ function NarrationBox({ text, onNext }) {
         width: '94vw',
         height: '314px',
         background: 'rgba(21, 22, 26, 0.80)',
+        zIndex: 10,
       }}
     >
       {/* 테두리 */}

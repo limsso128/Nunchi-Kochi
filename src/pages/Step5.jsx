@@ -28,7 +28,7 @@ function Step5() {
   const handleNext = () => {
     const next = index + 1;
     if (next >= steps.length) {
-      // 다음 연결 예정
+      navigate('/step6');
       return;
     }
     setIndex(next);
