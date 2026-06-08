@@ -1,32 +1,33 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import step1_1Background from '../assets/images/Step1_1.png';
+import step3Background from '../assets/images/step3_background.png';
 import Layout from '../components/Layout';
 import NarrationBox from '../components/NarrationBox';
 
-const dialogues = [
-  '우당탕-',
-  '늦잠을 자서 세수도 못하고 옷만 빠르게 입고 집을 나선다.',
+const steps = [
+  { type: 'narration', text: '마침 옆자리 주임님께서 파쇄할 서류가 많았는데\n도와달라고 하셨다.' },
 ];
 
-function Step1_A1() {
+function Step3_1() {
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
 
   const handleNext = () => {
-    if (index < dialogues.length - 1) {
+    if (index < steps.length - 1) {
       setIndex(index + 1);
     } else {
-      navigate('/step2');
+      navigate('/step4');
     }
   };
+
+  const current = steps[index];
 
   return (
     <Layout>
       <div
         style={{
           position: 'relative',
-          backgroundImage: `url(${step1_1Background})`,
+          backgroundImage: `url(${step3Background})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -34,10 +35,10 @@ function Step1_A1() {
           height: '100vh',
         }}
       >
-        <NarrationBox text={dialogues[index]} onNext={handleNext} />
+        <NarrationBox text={current.text} onNext={handleNext} />
       </div>
     </Layout>
   );
 }
 
-export default Step1_A1;
+export default Step3_1;

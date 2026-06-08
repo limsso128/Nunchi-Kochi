@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import level1Icon from '../assets/icons/level1.svg';
 import level2Icon from '../assets/icons/level2.svg';
 
-function MissionCard({ text, index }) {
+function MissionCard({ text, index, routeOverride }) {
   const [selected, setSelected] = useState(false);
   const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ function MissionCard({ text, index }) {
 
   const handleClick = () => {
     setSelected(true);
-    navigate(routes[index] || '/step1-1', { state: { choice: index } });
+    navigate(routeOverride || routes[index] || '/step1-1', { state: { choice: index } });
   };
 
   return (

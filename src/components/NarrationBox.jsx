@@ -49,6 +49,7 @@ function NarrationBox({ text, onNext }) {
             lineHeight: 'normal',
             margin: 0,
             whiteSpace: 'pre-line',
+            wordBreak: 'keep-all',
           }}
         >
           {text}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import step1_1Background from '../assets/images/Step1_1.png';
 import Layout from '../components/Layout';
 import NarrationBox from '../components/NarrationBox';
@@ -12,6 +12,7 @@ const choiceTexts = {
 };
 
 function Step1_1() {
+  const navigate = useNavigate();
   const location = useLocation();
   const choice = location.state?.choice;
   const text = choiceTexts[choice] ?? '(알람을 끄고 바로 눈을 떠서 준비를 맞쳤다.)';
@@ -33,7 +34,7 @@ function Step1_1() {
         {!showNext ? (
           <NarrationBox text={text} onNext={() => setShowNext(true)} />
         ) : (
-          <DialogueBox text="다녀오겠습니다~" onNext={() => {}} />
+          <DialogueBox text="다녀오겠습니다~" onNext={() => navigate('/step2')} />
         )}
       </div>
     </Layout>

@@ -1,6 +1,6 @@
 import NextButton from './NextButton';
 
-function DialogueBox({ text, onNext }) {
+function DialogueBox({ text, onNext, speaker = 'user' }) {
   return (
     <>
       {/* user 박스 */}
@@ -19,7 +19,7 @@ function DialogueBox({ text, onNext }) {
         }}
       >
         <p style={{ color: '#FFF', fontFamily: 'Coda', fontSize: '30px', fontWeight: 400, margin: 0 }}>
-          user
+          {speaker}
         </p>
       </div>
 
