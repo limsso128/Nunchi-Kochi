@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Coda:wght@400;800&display=swap');
+.coda-regular {
+  font-family: "Coda", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.coda-extrabold {
+  font-family: "Coda", system-ui;
+  font-weight: 800;
+  font-style: normal;
+}
 
 :root {
   --text: #6b6375;

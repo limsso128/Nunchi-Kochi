@@ -19,6 +19,7 @@ import Step4_2 from './pages/Step4_2';
 import Step4_3 from './pages/Step4_3';
 import Step5 from './pages/Step5';
 import Step6 from './pages/Step6';
+import Step7 from './pages/Step7';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/step4-3" element={<Step4_3 />} />
         <Route path="/step5" element={<Step5 />} />
         <Route path="/step6" element={<Step6 />} />
+        <Route path="/step7" element={<Step7 />} />
       </Routes>
     </BrowserRouter>
   );

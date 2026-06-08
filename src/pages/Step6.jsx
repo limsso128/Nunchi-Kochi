@@ -16,7 +16,7 @@ function Step6() {
     if (index < steps.length - 1) {
       setIndex(index + 1);
     } else {
-      // 다음 연결 예정
+      navigate('/step7');
     }
   };
 
