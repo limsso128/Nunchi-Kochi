@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { playHover, playSelect } from '../utils/sound';
 import level1Icon from '../assets/icons/level1.svg';
 import level2Icon from '../assets/icons/level2.svg';
 
 function MissionCard({ text, index, routeOverride, scoreState }) {
   const [selected, setSelected] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
 
   const routes = {
@@ -15,17 +17,24 @@ function MissionCard({ text, index, routeOverride, scoreState }) {
 
   const handleClick = () => {
     setSelected(true);
-    navigate(routeOverride || routes[index] || '/step1-1', { state: { choice: index, ...(scoreState || {}) } });
+    playSelect();
+    setTimeout(() => {
+      navigate(routeOverride || routes[index] || '/step1-1', { state: { choice: index, ...(scoreState || {}) } });
+    }, 150);
   };
 
   return (
     <div
       onClick={handleClick}
+      onMouseEnter={() => { setHovered(true); playHover(); }}
+      onMouseLeave={() => setHovered(false)}
       style={{
         position: 'relative',
         width: '1030px',
         height: '100px',
         cursor: 'pointer',
+        transform: hovered && !selected ? 'scaleX(1.012)' : 'scaleX(1)',
+        transition: 'transform 0.15s ease',
       }}
     >
       {/* 가로 배경 박스 */}

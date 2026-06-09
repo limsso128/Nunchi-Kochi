@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import BgmPlayer from './components/BgmPlayer';
 import HomePage from './pages/HomePage';
+import NameInputPage from './pages/NameInputPage';
 import Step1 from './pages/Step1';
 import Step1_1 from './pages/Step1_1';
 import Step1_A from './pages/Step1_A';
@@ -24,8 +26,10 @@ import Step7 from './pages/Step7';
 function App() {
   return (
     <BrowserRouter>
+      <BgmPlayer volume={11} />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/name-input" element={<NameInputPage />} />
         <Route path="/step1" element={<Step1 />} />
         <Route path="/step1-1" element={<Step1_1 />} />
         <Route path="/step1-a" element={<Step1_A />} />

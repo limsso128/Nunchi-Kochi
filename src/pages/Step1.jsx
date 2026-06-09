@@ -2,7 +2,7 @@ import { useState } from 'react';
 import step1Background from '../assets/images/Step1.png';
 import Layout from '../components/Layout';
 import MissionCard from '../components/MissionCard';
-import NextButton from '../components/NextButton';
+import DialogueBox from '../components/DialogueBox';
 
 const dialogues = [
   '띠디디띠-(알람음)',
@@ -15,26 +15,18 @@ function Step1() {
   const [showChoices, setShowChoices] = useState(false);
 
   const handleNext = () => {
-    if (index < dialogues.length - 1) {
-      setIndex(index + 1);
-    } else {
-      setShowChoices(true);
-    }
+    if (index < dialogues.length - 1) setIndex(index + 1);
+    else setShowChoices(true);
   };
 
   return (
     <Layout>
-      <div
-        style={{
-          position: 'relative',
-          backgroundImage: `url(${step1Background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          width: '100vw',
-          height: '100vh',
-        }}
-      >
+      <div style={{
+        position: 'relative',
+        backgroundImage: `url(${step1Background})`,
+        backgroundSize: 'cover', backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat', width: '100vw', height: '100vh',
+      }}>
         {showChoices ? (
           <>
             <div style={{ position: 'absolute', top: '480px', left: '50%', transform: 'translateX(-50%)' }}>
@@ -48,82 +40,7 @@ function Step1() {
             </div>
           </>
         ) : (
-          <>
-            <div
-              style={{
-                position: 'absolute',
-                top: '538px',
-                left: '35px',
-                width: '181px',
-                height: '64px',
-                background: 'rgba(21, 22, 26, 0.80)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <p
-                style={{
-                  width: '151px',
-                  height: '43px',
-                  color: '#FFF',
-                  textAlign: 'center',
-                  fontFamily: 'Coda',
-                  fontSize: '30px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  margin: 0,
-                }}
-              >
-                user
-              </p>
-            </div>
-            <div
-              style={{
-                position: 'absolute',
-                top: '602px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: '1197px',
-                height: '202px',
-                background: 'rgba(21, 22, 26, 0.80)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <p
-                style={{
-                  width: '1111px',
-                  height: '49px',
-                  color: '#FFF',
-                  textAlign: 'center',
-                  fontFamily: 'Coda',
-                  fontSize: '30px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  margin: 0,
-                }}
-              >
-                {dialogues[index]}
-              </p>
-            </div>
-            <NextButton onClick={handleNext} top="744px" left="1159px" />
-            <div
-              style={{
-                position: 'absolute',
-                top: '616.5px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: '1166px',
-                height: '173.5px',
-                border: '2px solid #000',
-                boxSizing: 'border-box',
-              }}
-            />
-          </>
+          <DialogueBox text={dialogues[index]} onNext={handleNext} />
         )}
       </div>
     </Layout>

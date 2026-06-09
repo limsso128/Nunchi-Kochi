@@ -1,4 +1,11 @@
+import { playClick } from '../utils/sound';
+
 function NextButton({ onClick, top, left }) {
+  const handleClick = () => {
+    playClick();
+    onClick();
+  };
+
   return (
     <p
       style={{
@@ -17,8 +24,9 @@ function NextButton({ onClick, top, left }) {
         margin: 0,
         cursor: 'pointer',
         zIndex: 10,
+        animation: 'pulse 1s ease-in-out infinite',
       }}
-      onClick={onClick}
+      onClick={handleClick}
     >
       &gt;
     </p>

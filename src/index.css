@@ -1,3 +1,47 @@
+/* 점수 팡 등장 */
+@keyframes scorePop {
+  0%   { opacity: 0; transform: scale(0.3) translateY(10px); }
+  60%  { opacity: 1; transform: scale(1.25) translateY(-6px); }
+  80%  { transform: scale(0.95) translateY(2px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* 점수 둥실 올라가기 */
+@keyframes scoreFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+/* 지식카드 오른쪽에서 슬라이드 인 */
+@keyframes slideInRight {
+  0%   { opacity: 0; transform: translateX(60px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* 페이지 페이드인 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* 커서 깜빡임 */
+@keyframes blink {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 0; }
+}
+
+/* > 버튼 pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* 페이드인 클래스 */
+.page-fadein {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
 .coda-regular {
   font-family: "Coda", system-ui;
   font-weight: 400;

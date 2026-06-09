@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import step1Background from '../assets/images/Step1.png';
+import deImage from '../assets/images/de.png';
 import Layout from '../components/Layout';
 import DialogueBox from '../components/DialogueBox';
 import NarrationBox from '../components/NarrationBox';
@@ -52,6 +53,22 @@ function Step1_B() {
           height: '100vh',
         }}
       >
+        {/* de 이미지 - 대화창보다 뒤 */}
+        <img
+          src={deImage}
+          alt=""
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: '600px',
+            maxHeight: '500px',
+            objectFit: 'contain',
+            zIndex: 0,
+          }}
+        />
+
         {showGradient && (
           <div
             style={{

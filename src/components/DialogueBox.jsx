@@ -1,9 +1,53 @@
+import { useState, useEffect } from 'react';
 import NextButton from './NextButton';
+import { playBlip, playClick } from '../utils/sound';
+import { getPlayerName } from '../utils/playerName';
 
 function DialogueBox({ text, onNext, speaker = 'user' }) {
+  const playerName = getPlayerName();
+  const resolvedSpeaker = speaker === 'user' ? playerName : speaker;
+  const resolvedText = text.replace(/\{user\}/g, playerName);
+
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Enter') handleClick();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [done]);
+
+  useEffect(() => {
+    setDisplayed('');
+    setDone(false);
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setDisplayed(resolvedText.slice(0, i));
+      if (resolvedText[i - 1] && resolvedText[i - 1] !== ' ' && resolvedText[i - 1] !== '\n') playBlip();
+      if (i >= resolvedText.length) {
+        clearInterval(interval);
+        setDone(true);
+      }
+    }, 40);
+    return () => clearInterval(interval);
+  }, [text]);
+
+  const handleClick = () => {
+    if (!done) {
+      setDisplayed(resolvedText);
+      setDone(true);
+    } else {
+      playClick();
+      onNext();
+    }
+  };
+
   return (
     <>
-      {/* user 박스 */}
+      {/* speaker 박스 */}
       <div
         style={{
           position: 'absolute',
@@ -19,12 +63,13 @@ function DialogueBox({ text, onNext, speaker = 'user' }) {
         }}
       >
         <p style={{ color: '#FFF', fontFamily: 'Coda', fontSize: '30px', fontWeight: 400, margin: 0 }}>
-          {speaker}
+          {resolvedSpeaker}
         </p>
       </div>
 
-      {/* 대화창 */}
+      {/* 대화창 (클릭 시 스킵 or 넘기기) */}
       <div
+        onClick={handleClick}
         style={{
           position: 'absolute',
           top: '602px',
@@ -37,6 +82,7 @@ function DialogueBox({ text, onNext, speaker = 'user' }) {
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 1,
+          cursor: 'pointer',
         }}
       >
         <p
@@ -44,14 +90,20 @@ function DialogueBox({ text, onNext, speaker = 'user' }) {
             width: '1111px',
             color: '#FFF',
             textAlign: 'center',
-            fontFamily: 'Coda',
+            fontFamily: '"Black Han Sans", Coda, sans-serif',
             fontSize: '30px',
             fontWeight: 400,
             lineHeight: 'normal',
             margin: 0,
+            whiteSpace: 'pre-line',
+            wordBreak: 'keep-all',
+            minHeight: '1em',
           }}
         >
-          {text}
+          {displayed}
+          {!done && (
+            <span style={{ opacity: 0.5, animation: 'blink 0.7s step-end infinite' }}>|</span>
+          )}
         </p>
       </div>
 
@@ -71,8 +123,10 @@ function DialogueBox({ text, onNext, speaker = 'user' }) {
         }}
       />
 
-      {/* > 버튼 */}
-      <NextButton onClick={onNext} top="744px" left="1159px" />
+      {/* > 버튼: 텍스트 완성 후 표시 */}
+      {done && (
+        <NextButton onClick={onNext} top="744px" left="1159px" />
+      )}
     </>
   );
 }
