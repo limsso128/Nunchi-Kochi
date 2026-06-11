@@ -25,8 +25,8 @@ function Step7() {
         {/* 명성 */}
         <div style={{
           position: 'absolute',
-          top: '185px',
-          left: '720px',
+          top: '170px',
+          left: '760px',
           width: '366px',
           height: '41px',
           color: '#0BF',
@@ -46,8 +46,8 @@ function Step7() {
         {/* 호감도 */}
         <div style={{
           position: 'absolute',
-          top: '228px',
-          left: '720px',
+          top: '213px',
+          left: '760px',
           width: '366px',
           height: '41px',
           color: '#F0A',

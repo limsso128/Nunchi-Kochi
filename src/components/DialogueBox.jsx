@@ -52,7 +52,7 @@ function DialogueBox({ text, onNext, speaker = 'user' }) {
         style={{
           position: 'absolute',
           top: '538px',
-          left: '35px',
+          left: 'calc(50% - 598.5px)',
           width: '181px',
           height: '64px',
           background: 'rgba(21, 22, 26, 0.80)',
