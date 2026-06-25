@@ -1,16 +1,42 @@
 import { useEffect } from 'react';
 import bgmSrc from '../assets/bgm.mp4';
 
-// 컴포넌트 밖 전역 — StrictMode 이중 실행 영향 없음
-const audio = new Audio(bgmSrc);
-audio.loop = true;
-audio.volume = 11 / 13;
-
+let audioCtx = null;
+let gainNode = null;
+let sourceNode = null;
+let audioBuffer = null;
+let volume = 11 / 13;
 let started = false;
 
-export function setBgmVolume(val0to13) {
-  audio.volume = Math.max(0, Math.min(1, val0to13 / 13));
+async function loadBuffer() {
+  try {
+    const res = await fetch(bgmSrc);
+    const arrayBuffer = await res.arrayBuffer();
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    gainNode = audioCtx.createGain();
+    gainNode.gain.value = volume;
+    gainNode.connect(audioCtx.destination);
+    audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+  } catch {
+    audioCtx = null;
+  }
 }
+
+function playLoop() {
+  if (!audioCtx || !audioBuffer) return;
+  sourceNode = audioCtx.createBufferSource();
+  sourceNode.buffer = audioBuffer;
+  sourceNode.loop = true;
+  sourceNode.connect(gainNode);
+  sourceNode.start(0);
+}
+
+export function setBgmVolume(val0to13) {
+  volume = Math.max(0, Math.min(1, val0to13 / 13));
+  if (gainNode) gainNode.gain.value = volume;
+}
+
+loadBuffer();
 
 function BgmPlayer() {
   useEffect(() => {
@@ -19,7 +45,9 @@ function BgmPlayer() {
     const startBgm = () => {
       if (started) return;
       started = true;
-      audio.play().catch(e => console.warn('BGM 재생 실패:', e));
+      if (audioCtx) {
+        audioCtx.resume().then(playLoop).catch(() => {});
+      }
       document.removeEventListener('click', startBgm);
     };
 
