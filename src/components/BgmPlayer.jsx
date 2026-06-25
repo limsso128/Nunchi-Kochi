@@ -1,57 +1,40 @@
 import { useEffect } from 'react';
 import bgmSrc from '../assets/bgm.mp4';
 
-let audioCtx = null;
 let gainNode = null;
-let sourceNode = null;
-let audioBuffer = null;
-let volume = 11 / 13;
 let started = false;
 
-async function loadBuffer() {
+export function setBgmVolume(val0to13) {
+  if (gainNode) gainNode.gain.value = Math.max(0, Math.min(1, val0to13 / 13));
+}
+
+async function startBgm() {
+  if (started) return;
+  started = true;
+
   try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    gainNode = audioCtx.createGain();
+    gainNode.gain.value = 11 / 13;
+    gainNode.connect(audioCtx.destination);
+
     const res = await fetch(bgmSrc);
     const arrayBuffer = await res.arrayBuffer();
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    gainNode = audioCtx.createGain();
-    gainNode.gain.value = volume;
-    gainNode.connect(audioCtx.destination);
-    audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+    const source = audioCtx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.loop = true;
+    source.connect(gainNode);
+    source.start(0);
   } catch {
-    audioCtx = null;
+    // BGM 재생 불가 환경 무시
   }
 }
 
-function playLoop() {
-  if (!audioCtx || !audioBuffer) return;
-  sourceNode = audioCtx.createBufferSource();
-  sourceNode.buffer = audioBuffer;
-  sourceNode.loop = true;
-  sourceNode.connect(gainNode);
-  sourceNode.start(0);
-}
-
-export function setBgmVolume(val0to13) {
-  volume = Math.max(0, Math.min(1, val0to13 / 13));
-  if (gainNode) gainNode.gain.value = volume;
-}
-
-loadBuffer();
-
 function BgmPlayer() {
   useEffect(() => {
-    if (started) return;
-
-    const startBgm = () => {
-      if (started) return;
-      started = true;
-      if (audioCtx) {
-        audioCtx.resume().then(playLoop).catch(() => {});
-      }
-      document.removeEventListener('click', startBgm);
-    };
-
-    document.addEventListener('click', startBgm);
+    document.addEventListener('click', startBgm, { once: true });
     return () => document.removeEventListener('click', startBgm);
   }, []);
 
